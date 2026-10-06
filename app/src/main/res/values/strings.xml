@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Education Android Project</string>
+    <string name="age">Возраст</string>
+    <string name="size">Размер</string>
+    <string name="download">Установить</string>
+    <string name="screenshot">Скриншоты</string>
+    <string name="description">Описание приложения</string>
+    <string name="more">Читать подробнее</string>
+    <string name="roll_up">Свернуть</string>
+    <string name="name_app_1">QuickNote</string>
+    <string name="category_app_1">Производительность</string>
+    <string name="autor_app_1">QuicSoft inc</string>
+    <string name="age_app_1">3+</string>
+    <string name="size_app_1">8 MB</string>
+    <string name="description_app_1">QuickNote - практичное приложение для хранения, организации и быстрой фиксации идей. Можно создать цветные блокноты и добавлять напоминания.</string>
 </resources>
