@@ -75,6 +75,7 @@ fun ListAppScreen(modifier: Modifier = Modifier) {
             .padding(10.dp),
         verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
+        TopAppBarListAppScreen()
         apps.forEach { app ->
             AppCard(app = app)
         }

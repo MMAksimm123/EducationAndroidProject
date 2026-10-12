@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,12 +23,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             EducationAndroidProjectTheme {
-                Scaffold(
-                    topBar = {
-                        TopAppBarListAppScreen()
+                Scaffold() { innerPadding ->
+                    Column(modifier = Modifier.padding(innerPadding)) {
+                        ListAppScreen()
                     }
-                ) { innerPadding ->
-                    ListAppScreen(modifier = Modifier.padding(innerPadding))
+
                 }
             }
         }

@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,10 +26,10 @@ import com.example.educationandroidproject.ui.theme.EducationAndroidProjectTheme
 
 @Composable
 fun TopAppBarListAppScreen() {
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .background(MaterialTheme.colorScheme.primary)
-        .windowInsetsPadding(WindowInsets.statusBars)) {
+    Card (modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primary
+        )) {
         Image(
             painter = painterResource(R.drawable.cat),
             contentDescription = null,
@@ -37,7 +39,6 @@ fun TopAppBarListAppScreen() {
                 .padding(5.dp)
                 .clip(RoundedCornerShape(5.dp))
         )
-        Spacer(modifier = Modifier.weight(1f))
     }
 }
 
