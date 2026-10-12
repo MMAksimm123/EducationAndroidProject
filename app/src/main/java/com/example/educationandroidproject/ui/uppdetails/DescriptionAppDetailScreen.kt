@@ -22,7 +22,7 @@ import com.example.educationandroidproject.R
 import com.example.educationandroidproject.ui.theme.EducationAndroidProjectTheme
 
 @Composable
-fun DescriptionAppDetailScreen() {
+fun DescriptionAppDetailScreen(description: String) {
     val minimizedMaxLines: Int = 2
     var isExpanded by remember { mutableStateOf(false) }
     Column(modifier = Modifier
@@ -33,7 +33,7 @@ fun DescriptionAppDetailScreen() {
             fontSize = 15.sp
         )
         Text(
-            text = stringResource(R.string.description_app_1),
+            text = description,
             maxLines = if (isExpanded) Int.MAX_VALUE else minimizedMaxLines,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.animateContentSize()
@@ -53,6 +53,6 @@ fun DescriptionAppDetailScreen() {
 @Composable
 fun PreviewDescriptionAppDetailScreen() {
     EducationAndroidProjectTheme() {
-        DescriptionAppDetailScreen()
+        DescriptionAppDetailScreen(description = "Test")
     }
 }

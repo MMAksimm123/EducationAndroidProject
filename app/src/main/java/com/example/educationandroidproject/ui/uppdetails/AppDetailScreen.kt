@@ -4,23 +4,33 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.educationandroidproject.R
+import com.example.educationandroidproject.data.AppItem
+import com.example.educationandroidproject.data.SampleApps
 import com.example.educationandroidproject.ui.theme.EducationAndroidProjectTheme
 
 @Composable
-fun AppDetailScreen(modifier: Modifier = Modifier) {
+fun AppDetailScreen(
+    appData: AppItem,
+    modifier: Modifier = Modifier,
+    onShowcaseAppClick: (AppItem) -> Unit = {}
+) {
     Column(modifier = modifier) {
-        InfoCardDetailScreen()
+        InfoCardDetailScreen(appData.category, appData.nameApp, appData.icon)
         ButtonDownloadDetailScreen()
         ImageScrollPanelDetailScreen()
-        DescriptionAppDetailScreen()
+        DescriptionAppDetailScreen(appData.description)
         SeparetedDetailScreen()
+        AppShowcase(onAppClick = onShowcaseAppClick)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewAppDetailScreen() {
+    val apps = SampleApps.apps
+
     EducationAndroidProjectTheme() {
-        AppDetailScreen()
+        AppDetailScreen(apps[1])
     }
 }

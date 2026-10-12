@@ -1,6 +1,7 @@
 package com.example.educationandroidproject.ui.uppdetails
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,16 +20,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.educationandroidproject.data.AppItem
+import com.example.educationandroidproject.data.SampleApps
+import com.example.educationandroidproject.ui.theme.EducationAndroidProjectTheme
 
 @Composable
 fun AppCard(
     app: AppItem,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable{ onClick() },
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
@@ -64,5 +71,14 @@ fun AppCard(
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewAppCard() {
+    val app = SampleApps.apps
+    EducationAndroidProjectTheme() {
+        AppCard(app[0])
     }
 }

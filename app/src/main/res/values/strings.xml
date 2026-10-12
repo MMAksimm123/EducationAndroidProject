@@ -3,6 +3,7 @@
     <string name="age">Возраст</string>
     <string name="size">Размер</string>
     <string name="download">Установить</string>
+    <string name="download_2">Скачать</string>
     <string name="screenshot">Скриншоты</string>
     <string name="description">Описание приложения</string>
     <string name="more">Читать подробнее</string>

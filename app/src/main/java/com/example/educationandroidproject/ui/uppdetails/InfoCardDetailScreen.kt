@@ -1,5 +1,6 @@
 package com.example.educationandroidproject.ui.uppdetails
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,13 +25,13 @@ import com.example.educationandroidproject.R
 import com.example.educationandroidproject.ui.theme.EducationAndroidProjectTheme
 
 @Composable
-fun InfoCardDetailScreen() {
+fun InfoCardDetailScreen(category: String, name: String, iconApp: Int) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
         Image(
-            painter = painterResource(R.drawable.cat),
+            painter = painterResource(iconApp),
             contentDescription = null,
             modifier = Modifier
                 .size(150.dp)
@@ -39,12 +40,12 @@ fun InfoCardDetailScreen() {
         )
         Column() {
             Text(
-                text = stringResource(R.string.category_app_1),
+                text = category,
                 color = MaterialTheme.colorScheme.secondary,
                 fontSize = 10.sp
             )
             Text(
-                text = stringResource(R.string.name_app_1),
+                text = name,
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp
             )
@@ -84,6 +85,6 @@ fun InfoCardDetailScreen() {
 @Composable
 fun PreviewInfoCardDetailScreen() {
     EducationAndroidProjectTheme() {
-        InfoCardDetailScreen()
+        InfoCardDetailScreen(name = "Test", category = "TestCategory", iconApp = 1)
     }
 }
