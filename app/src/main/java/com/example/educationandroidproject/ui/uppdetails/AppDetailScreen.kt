@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.educationandroidproject.R
 import com.example.educationandroidproject.data.AppItem
 import com.example.educationandroidproject.data.SampleApps
 import com.example.educationandroidproject.ui.theme.EducationAndroidProjectTheme
@@ -21,7 +20,9 @@ fun AppDetailScreen(
         ImageScrollPanelDetailScreen()
         DescriptionAppDetailScreen(appData.description)
         SeparetedDetailScreen()
-        AppShowcase(onAppClick = onShowcaseAppClick)
+        AppShowcase(
+            apps = SampleApps.apps,
+            onAppClick = onShowcaseAppClick)
     }
 }
 

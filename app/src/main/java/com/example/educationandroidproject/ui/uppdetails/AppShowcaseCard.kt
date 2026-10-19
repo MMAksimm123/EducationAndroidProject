@@ -48,7 +48,7 @@ fun AppShowcaseCard(appData: AppItem) {
             )
             Text(
                 text = appData.nameApp,
-                maxLines = 2,
+                maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
             Button(
