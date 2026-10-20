@@ -1,4 +1,4 @@
-package com.example.educationandroidproject.ui.uppdetails
+package com.example.educationandroidproject.presentation.appdetails
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.example.educationandroidproject.R
 import com.example.educationandroidproject.data.AppItem
 import com.example.educationandroidproject.data.SampleApps
-import com.example.educationandroidproject.ui.theme.EducationAndroidProjectTheme
+import com.example.educationandroidproject.presentation.theme.EducationAndroidProjectTheme
 
 @Composable
 fun AppShowcaseCard(appData: AppItem) {

@@ -15,4 +15,6 @@
     <string name="age_app_1">3+</string>
     <string name="size_app_1">8 MB</string>
     <string name="description_app_1">QuickNote - практичное приложение для хранения, организации и быстрой фиксации идей. Можно создать цветные блокноты и добавлять напоминания.</string>
+    <string name="store_name">AppStore</string>
+    <string name="message_event">Добро пожаловать в AppStore!</string>
 </resources>

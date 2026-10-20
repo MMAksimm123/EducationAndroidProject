@@ -1,4 +1,4 @@
-package com.example.educationandroidproject.ui.uppdetails
+package com.example.educationandroidproject.presentation.appdetails
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.educationandroidproject.R
-import com.example.educationandroidproject.ui.theme.EducationAndroidProjectTheme
+import com.example.educationandroidproject.presentation.theme.EducationAndroidProjectTheme
 
 @Composable
 fun TopAppBarDetailScreen() {

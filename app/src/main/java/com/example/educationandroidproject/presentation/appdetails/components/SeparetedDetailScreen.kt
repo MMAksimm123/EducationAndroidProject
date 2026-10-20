@@ -1,4 +1,4 @@
-package com.example.educationandroidproject.ui.uppdetails
+package com.example.educationandroidproject.presentation.appdetails
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider

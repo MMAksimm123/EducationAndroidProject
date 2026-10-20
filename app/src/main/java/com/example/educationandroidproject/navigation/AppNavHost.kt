@@ -6,8 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.educationandroidproject.data.SampleApps
-import com.example.educationandroidproject.ui.uppdetails.AppDetailScreen
-import com.example.educationandroidproject.ui.uppdetails.ListAppScreen
+import com.example.educationandroidproject.presentation.appdetails.AppDetailScreen
+import com.example.educationandroidproject.presentation.appdetails.ListAppScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -25,7 +25,6 @@ fun AppNavHost() {
     ) {
         composable<ListDestination> {
             ListAppScreen(
-                apps = SampleApps.apps,
                 onAppClick = { app ->
                     navController.navigate(DetailDestination(app.id))
                 }

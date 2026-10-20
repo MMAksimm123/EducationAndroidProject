@@ -1,6 +1,5 @@
-package com.example.educationandroidproject.ui.uppdetails
+package com.example.educationandroidproject.presentation.appdetails
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.educationandroidproject.R
-import com.example.educationandroidproject.ui.theme.EducationAndroidProjectTheme
+import com.example.educationandroidproject.presentation.theme.EducationAndroidProjectTheme
 
 @Composable
 fun InfoCardDetailScreen(category: String, name: String, iconApp: Int) {
