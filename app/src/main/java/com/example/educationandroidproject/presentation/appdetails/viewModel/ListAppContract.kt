@@ -3,11 +3,12 @@ package com.example.educationandroidproject.presentation.appdetails
 import androidx.annotation.StringRes
 import com.example.educationandroidproject.data.AppItem
 
-data class ListAppState(
-    val apps: List<AppItem> = emptyList(),
-    val isLoading: Boolean = true
-)
+sealed interface ListAppState {
+    data object Loading : ListAppState
+    data class Content(val apps: List<AppItem>) : ListAppState
+    data object Error : ListAppState
+}
 
 sealed interface ListAppEvent {
-    data class ShowSnackbar(@StringRes val message: Int) : ListAppEvent
+    data object ShowSnackbar : ListAppEvent
 }

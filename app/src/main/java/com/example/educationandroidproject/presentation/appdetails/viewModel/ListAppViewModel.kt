@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class ListAppViewModel : ViewModel() {
-    private val _uiState = MutableStateFlow(ListAppState())
+    private val _uiState = MutableStateFlow<ListAppState>(ListAppState.Loading)
     val uiState: StateFlow<ListAppState> = _uiState.asStateFlow()
 
     private val _events = Channel<ListAppEvent>(Channel.BUFFERED)
@@ -25,19 +25,19 @@ class ListAppViewModel : ViewModel() {
 
     private fun loadApps() {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
-            delay(1000)
-
-            _uiState.value = ListAppState(
-                apps = SampleApps.apps,
-                isLoading = false
-            )
+            _uiState.value = ListAppState.Loading
+            try {
+                delay(1000)
+                _uiState.value = ListAppState.Content(SampleApps.apps)
+            } catch (e: Exception) {
+                _uiState.value = ListAppState.Error
+            }
         }
     }
 
     fun onLogoClick() {
         viewModelScope.launch {
-            _events.send(ListAppEvent.ShowSnackbar(R.string.message_event))
+            _events.send(ListAppEvent.ShowSnackbar)
         }
     }
 }
