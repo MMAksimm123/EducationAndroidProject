@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.educationandroidproject.R
 import com.example.educationandroidproject.data.SampleApps
+import com.example.educationandroidproject.data.repository.AppRepositoryImpl
+import com.example.educationandroidproject.domain.repository.AppRepository
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +14,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-class ListAppViewModel : ViewModel() {
+class ListAppViewModel(
+    private val repository: AppRepository = AppRepositoryImpl()
+) : ViewModel() {
     private val _uiState = MutableStateFlow<ListAppState>(ListAppState.Loading)
     val uiState: StateFlow<ListAppState> = _uiState.asStateFlow()
 
@@ -28,7 +32,8 @@ class ListAppViewModel : ViewModel() {
             _uiState.value = ListAppState.Loading
             try {
                 delay(1000)
-                _uiState.value = ListAppState.Content(SampleApps.apps)
+                val apps = repository.getApps()
+                _uiState.value = ListAppState.Content(apps)
             } catch (e: Exception) {
                 _uiState.value = ListAppState.Error
             }
