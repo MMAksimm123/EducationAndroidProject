@@ -17,4 +17,5 @@
     <string name="description_app_1">QuickNote - практичное приложение для хранения, организации и быстрой фиксации идей. Можно создать цветные блокноты и добавлять напоминания.</string>
     <string name="store_name">AppStore</string>
     <string name="message_event">Добро пожаловать в AppStore!</string>
+    <string name="error_message">Возникла непредвиденная ошибка</string>
 </resources>

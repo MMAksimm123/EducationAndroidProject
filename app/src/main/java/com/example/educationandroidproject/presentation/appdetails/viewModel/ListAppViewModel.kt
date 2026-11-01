@@ -2,10 +2,8 @@ package com.example.educationandroidproject.presentation.appdetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.educationandroidproject.R
-import com.example.educationandroidproject.data.SampleApps
-import com.example.educationandroidproject.data.repository.AppRepositoryImpl
 import com.example.educationandroidproject.domain.repository.AppRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,9 +11,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ListAppViewModel(
-    private val repository: AppRepository = AppRepositoryImpl()
+@HiltViewModel
+class ListAppViewModel @Inject constructor(
+    private val repository: AppRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<ListAppState>(ListAppState.Loading)
     val uiState: StateFlow<ListAppState> = _uiState.asStateFlow()

@@ -5,8 +5,9 @@ import com.example.educationandroidproject.data.AppItem
 import com.example.educationandroidproject.data.dto.AppDto
 import com.example.educationandroidproject.data.mapper.toDomain
 import com.example.educationandroidproject.domain.repository.AppRepository
+import javax.inject.Inject
 
-class AppRepositoryImpl : AppRepository {
+class AppRepositoryImpl @Inject constructor() : AppRepository {
     private val mockBackendData = listOf(
         AppDto(
             1,
