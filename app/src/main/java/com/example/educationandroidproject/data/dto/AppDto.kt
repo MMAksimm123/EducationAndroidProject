@@ -1,11 +1,12 @@
 package com.example.educationandroidproject.data.dto
 
-import androidx.annotation.DrawableRes
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class AppDto(
-    val id: Int,
-    @DrawableRes val iconRes: Int,
-    val title: String,
-    val desc: String,
-    val type: String
+    val id: String,
+    val name: String,
+    val description: String,
+    val category: String,
+    val iconUrl: String,
 )

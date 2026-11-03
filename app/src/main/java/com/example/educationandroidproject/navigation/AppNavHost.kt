@@ -12,7 +12,7 @@ import kotlinx.serialization.Serializable
 data object ListDestination
 
 @Serializable
-data class DetailDestination(val  appId: Int)
+data class DetailDestination(val  appId: String)
 @Composable
 fun AppNavHost() {
     val navController = rememberNavController()

@@ -20,17 +20,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.educationandroidproject.R
 import com.example.educationandroidproject.presentation.theme.EducationAndroidProjectTheme
 
 @Composable
-fun InfoCardDetailScreen(category: String, name: String, iconApp: Int) {
+fun InfoCardDetailScreen(category: String, name: String, iconApp: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Image(
-            painter = painterResource(iconApp),
+        AsyncImage(
+           model = iconApp,
             contentDescription = null,
             modifier = Modifier
                 .size(150.dp)
@@ -84,6 +85,6 @@ fun InfoCardDetailScreen(category: String, name: String, iconApp: Int) {
 @Composable
 fun PreviewInfoCardDetailScreen() {
     EducationAndroidProjectTheme() {
-        InfoCardDetailScreen(name = "Test", category = "TestCategory", iconApp = 1)
+        InfoCardDetailScreen(name = "Test", category = "TestCategory", iconApp = "1")
     }
 }

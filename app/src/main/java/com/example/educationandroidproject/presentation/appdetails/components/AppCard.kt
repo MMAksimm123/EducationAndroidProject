@@ -1,6 +1,5 @@
 package com.example.educationandroidproject.presentation.appdetails
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,11 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.educationandroidproject.data.AppItem
-import com.example.educationandroidproject.data.SampleApps
 import com.example.educationandroidproject.presentation.theme.EducationAndroidProjectTheme
 
 @Composable
@@ -44,8 +42,8 @@ fun AppCard(
                 .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                painter = painterResource(app.icon),
+            AsyncImage(
+                model = app.iconUrl,
                 contentDescription = app.nameApp,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -77,8 +75,15 @@ fun AppCard(
 @Preview
 @Composable
 fun PreviewAppCard() {
-    val app = SampleApps.apps
     EducationAndroidProjectTheme() {
-        AppCard(app[0])
+        AppCard(
+            app = AppItem(
+                id = "1",
+                iconUrl = "https://picsum.photos/200",
+                nameApp = "Тестовое приложение",
+                description = "Описание",
+                category = "Категория"
+            )
+        )
     }
 }
