@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.educationandroidproject.domain.repository.AppRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -33,14 +33,17 @@ class ListAppViewModel @Inject constructor(
     private fun loadApps() {
         viewModelScope.launch {
             _uiState.value = ListAppState.Loading
-            try {
-                val apps = withContext(Dispatchers.IO) {
+            runCatching {
+                withContext(Dispatchers.IO) {
                     repository.getApps()
                 }
+            }.onSuccess { apps ->
                 _uiState.value = ListAppState.Content(apps)
-            } catch (e: Exception) {
+            }.onFailure { throwable ->
+                if (throwable is CancellationException) throw throwable
+
                 _uiState.value = ListAppState.Error
-                Log.e("ListAppViewModel", "Error loading apps", e)
+                Log.e("ListAppViewModel", "Error loading apps", throwable)
             }
         }
     }
