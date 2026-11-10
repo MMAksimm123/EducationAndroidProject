@@ -18,4 +18,9 @@
     <string name="store_name">AppStore</string>
     <string name="message_event">Добро пожаловать в AppStore!</string>
     <string name="error_message">Возникла непредвиденная ошибка</string>
+    <string name="cancel">Отменить</string>
+    <string name="installed">Установлено</string>
+    <string name="rating">Рэйтинг</string>
+    <string name="sequentially">Последовательно</string>
+    <string name="parallel">Параллельно</string>
 </resources>

@@ -28,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.educationandroidproject.R
 import com.example.educationandroidproject.data.AppItem
+import com.example.educationandroidproject.presentation.appdetails.viewModel.AppDetailsState
 import com.example.educationandroidproject.presentation.appdetails.viewModel.DetailViewModel
 import com.example.educationandroidproject.presentation.theme.EducationAndroidProjectTheme
 
@@ -36,36 +37,71 @@ fun AppDetailScreen(
     viewModel: DetailViewModel = hiltViewModel(),
     onShowcaseAppClick: (AppItem) -> Unit = {}
 ) {
-    val appData by viewModel.appData.collectAsStateWithLifecycle()
-    val showcaseApps by viewModel.showcaseApps.collectAsStateWithLifecycle()
-    val errorMessage by viewModel.errorMessage.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
-    if (errorMessage != null) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = errorMessage!!, modifier = Modifier.padding(16.dp))
+    when (val currentState = state) {
+        is AppDetailsState.Loading -> {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
         }
-        return
-    }
-
-    if (appData == null) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
+        is AppDetailsState.Error -> {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text(
+                    text = currentState.message,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         }
-        return
+        is AppDetailsState.Content -> {
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState())
+            ) {
+                InfoCardDetailScreen(
+                    category = currentState.app.category,
+                    name = currentState.app.nameApp,
+                    iconApp = currentState.app.iconUrl
+                )
+                ButtonDownloadDetailScreen(
+                    installState = currentState.installState,
+                    onInstallClick = viewModel::onInstallClick
+                )
+                ImageScrollPanelDetailScreen()
+                DescriptionAppDetailScreen(currentState.app.description)
+                SeparetedDetailScreen()
+                AppShowcase(
+                    apps = currentState.showcaseApps,
+                    onAppClick = onShowcaseAppClick
+                )
+            }
+        }
     }
-
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        InfoCardDetailScreen(appData!!.category, appData!!.nameApp, appData!!.iconUrl)
-        ButtonDownloadDetailScreen()
-        ImageScrollPanelDetailScreen()
-        DescriptionAppDetailScreen(appData!!.description)
-        SeparetedDetailScreen()
-
-        AppShowcase(
-            apps = showcaseApps,
-            onAppClick = onShowcaseAppClick
-        )
-    }
+//    if (errorMessage != null) {
+//        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+//            Text(text = errorMessage!!, modifier = Modifier.padding(16.dp))
+//        }
+//        return
+//    }
+//
+//    if (appData == null) {
+//        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+//            CircularProgressIndicator()
+//        }
+//        return
+//    }
+//
+//    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+//        InfoCardDetailScreen(appData!!.category, appData!!.nameApp, appData!!.iconUrl)
+//        ButtonDownloadDetailScreen()
+//        ImageScrollPanelDetailScreen()
+//        DescriptionAppDetailScreen(appData!!.description)
+//        SeparetedDetailScreen()
+//
+//        AppShowcase(
+//            apps = showcaseApps,
+//            onAppClick = onShowcaseAppClick
+//        )
+//    }
 }
 
 @Preview(showBackground = true)

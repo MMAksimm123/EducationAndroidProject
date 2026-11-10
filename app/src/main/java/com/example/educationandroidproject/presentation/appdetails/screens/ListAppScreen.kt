@@ -2,11 +2,15 @@ package com.example.educationandroidproject.presentation.appdetails
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -69,20 +73,48 @@ fun ListAppScreen(
                 }
             }
             is ListAppState.Content -> {
-                LazyColumn(
+                Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(innerPadding),
-                    verticalArrangement = Arrangement.spacedBy(5.dp),
-                    contentPadding = PaddingValues(10.dp)
+                        .padding(innerPadding)
                 ) {
-                    items(currentState.apps) { app ->
-                        AppCard(
-                            app = app,
-                            onClick = {onAppClick(app)}
-                        )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Button(
+                            onClick = {viewModel.loadRatingsSequentially()}
+                        ) {
+                            Text(
+                                text = stringResource(R.string.sequentially)
+                            )
+                        }
+                        Button(
+                            onClick = {viewModel.loadRatingsInParallel()}
+                        ) {
+                            Text(
+                                text = stringResource(R.string.parallel)
+                            )
+                        }
+                    }
+                    LazyColumn(
+                        modifier = Modifier
+                            .weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(5.dp),
+                        contentPadding = PaddingValues(10.dp)
+                    ) {
+                        items(currentState.apps) { app ->
+                            AppCard(
+                                app = app,
+                                rating = currentState.ratings[app.id],
+                                onClick = {onAppClick(app)}
+                            )
+                        }
                     }
                 }
+
             }
             is ListAppState.Error -> {
                 Box(

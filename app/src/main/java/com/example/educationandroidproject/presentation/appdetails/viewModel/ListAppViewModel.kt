@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.system.measureTimeMillis
 
 @HiltViewModel
 class ListAppViewModel @Inject constructor(
@@ -34,17 +35,44 @@ class ListAppViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = ListAppState.Loading
             runCatching {
-                withContext(Dispatchers.IO) {
-                    repository.getApps()
-                }
+                repository.getApps()
             }.onSuccess { apps ->
                 _uiState.value = ListAppState.Content(apps)
             }.onFailure { throwable ->
-                if (throwable is CancellationException) throw throwable
-
-                _uiState.value = ListAppState.Error
-                Log.e("ListAppViewModel", "Error loading apps", throwable)
+                _uiState.value = ListAppState.Error(throwable.message ?: "Ошибка")
             }
+        }
+    }
+
+    fun loadRatingsSequentially() {
+        val currentState = _uiState.value
+        if (currentState !is ListAppState.Content) return
+
+        viewModelScope.launch {
+            val time = measureTimeMillis {
+                val rating = repository.loadRatingsSequentially(currentState.apps.map {
+                    it.id
+                })
+                _uiState.value = currentState.copy(ratings = rating)
+            }
+            Log.d("RatingsTime", "Последовательно: $time мс")
+            _events.send(ListAppEvent.ShowSnackbar)
+        }
+    }
+
+    fun loadRatingsInParallel() {
+        val currentState = _uiState.value
+        if (currentState !is ListAppState.Content) return
+
+        viewModelScope.launch {
+            val time = measureTimeMillis {
+                val rating = repository.loadRatingsInParallel(currentState.apps.map {
+                    it.id
+                })
+                _uiState.value = currentState.copy(ratings = rating)
+            }
+            Log.d("RatingsTime", "Параллельно: $time мс")
+            _events.send(ListAppEvent.ShowSnackbar)
         }
     }
 
