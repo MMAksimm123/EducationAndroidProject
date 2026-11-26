@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.example.educationandroidproject.domain.repository.AppDetailsRepository
 import com.example.educationandroidproject.domain.repository.AppRepository
 import com.example.educationandroidproject.navigation.DetailDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,17 +15,19 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val repository: AppRepository,
+    private val repository: AppDetailsRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val destination = savedStateHandle.toRoute<DetailDestination>()
+    private val appId = destination.appId
 
     private val _state = MutableStateFlow<AppDetailsState>(AppDetailsState.Loading)
     val state: StateFlow<AppDetailsState> = _state.asStateFlow()
@@ -32,26 +35,44 @@ class DetailViewModel @Inject constructor(
     private var installJob: Job? = null
 
     init {
-        loadData()
+        fetchData()
+        observeAppDetails()
     }
 
-    private fun loadData() {
+    private fun fetchData() {
         viewModelScope.launch {
             runCatching {
-                val app = repository.getAppById(destination.appId)
-                    ?: throw IllegalArgumentException("Приложение не найдено")
-                val showcase = repository.getApps()
-                Pair(app, showcase)
-            }.onSuccess { (app, showcase) ->
-                _state.value = AppDetailsState.Content(
-                    app = app,
-                    showcaseApps = showcase
-                )
+                repository.fetchAndSaveAppDetails(appId)
             }.onFailure { throwable ->
-                if (throwable is CancellationException) throw throwable
-                _state.value = AppDetailsState.Error("Не удалось загрузить данные: ${throwable.localizedMessage}")
-                Log.e("DetailViewModel", "Error loading details", throwable)
+                if (throwable is CancellationException) throw  throwable
+                Log.e("DetailViewModel", "Ошибка сети: ${throwable.localizedMessage}")
             }
+        }
+    }
+
+    private fun observeAppDetails() {
+        viewModelScope.launch {
+            repository.observeAppDetails(appId)
+                .catch { e ->
+                    _state.value = AppDetailsState.Error("Ошибка БД: ${e.message}")
+                }
+                .collect { appDetails ->
+                    val currentInstallState = (_state.value as? AppDetailsState.Content)
+                        ?.installState ?: InstallState.NotInstalled
+
+                    _state.value = AppDetailsState.Content(
+                        app = appDetails,
+                        showcaseApps = (_state.value as? AppDetailsState.Content)
+                            ?.showcaseApps ?: emptyList(),
+                        installState = currentInstallState
+                    )
+                }
+        }
+    }
+
+    fun toggleWishlist() {
+        viewModelScope.launch {
+            repository.toggleWishlist(appId)
         }
     }
 

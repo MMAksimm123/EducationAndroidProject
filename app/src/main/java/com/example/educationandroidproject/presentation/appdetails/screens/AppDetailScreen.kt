@@ -35,7 +35,8 @@ import com.example.educationandroidproject.presentation.theme.EducationAndroidPr
 @Composable
 fun AppDetailScreen(
     viewModel: DetailViewModel = hiltViewModel(),
-    onShowcaseAppClick: (AppItem) -> Unit = {}
+    onShowcaseAppClick: (AppItem) -> Unit = {},
+    onBackClick: () -> Unit = {}
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -54,25 +55,33 @@ fun AppDetailScreen(
             }
         }
         is AppDetailsState.Content -> {
-            Column(
-                modifier = Modifier.verticalScroll(rememberScrollState())
-            ) {
-                InfoCardDetailScreen(
-                    category = currentState.app.category,
-                    name = currentState.app.nameApp,
-                    iconApp = currentState.app.iconUrl
+            Column() {
+                TopAppBarDetailScreen(
+                    isInWishlist = currentState.app.isInWishlist,
+                    onWishlistClic = viewModel::toggleWishlist,
+                    onBackClick = onBackClick
                 )
-                ButtonDownloadDetailScreen(
-                    installState = currentState.installState,
-                    onInstallClick = viewModel::onInstallClick
-                )
-                ImageScrollPanelDetailScreen()
-                DescriptionAppDetailScreen(currentState.app.description)
-                SeparetedDetailScreen()
-                AppShowcase(
-                    apps = currentState.showcaseApps,
-                    onAppClick = onShowcaseAppClick
-                )
+                Column(
+                    modifier = Modifier.verticalScroll(rememberScrollState())
+                ) {
+                    InfoCardDetailScreen(
+                        category = currentState.app.category,
+                        name = currentState.app.nameApp,
+                        iconApp = currentState.app.iconUrl
+                    )
+                    ButtonDownloadDetailScreen(
+                        installState = currentState.installState,
+                        onInstallClick = viewModel::onInstallClick
+                    )
+                    ImageScrollPanelDetailScreen()
+                    DescriptionAppDetailScreen(currentState.app.description)
+                    SeparetedDetailScreen()
+                    AppShowcase(
+                        apps = currentState.showcaseApps,
+                        onAppClick = onShowcaseAppClick
+                    )
+                }
+
             }
         }
     }

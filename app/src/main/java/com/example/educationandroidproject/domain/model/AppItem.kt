@@ -7,5 +7,6 @@ data class AppItem(
     val iconUrl: String,
     val nameApp: String,
     val description: String,
-    val category: String
+    val category: String,
+    val isInWishlist: Boolean = false
 )

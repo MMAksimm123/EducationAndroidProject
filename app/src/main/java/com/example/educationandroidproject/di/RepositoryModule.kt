@@ -1,6 +1,8 @@
 package com.example.educationandroidproject.di
 
+import com.example.educationandroidproject.data.repository.AppDetailsRepositoryImpl
 import com.example.educationandroidproject.data.repository.AppRepositoryImpl
+import com.example.educationandroidproject.domain.repository.AppDetailsRepository
 import com.example.educationandroidproject.domain.repository.AppRepository
 import dagger.Binds
 import dagger.Module
@@ -16,4 +18,10 @@ abstract class RepositoryModule {
     abstract fun bindAppRepository(
         impl: AppRepositoryImpl
     ) : AppRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAppDetailsRepository(
+        impl: AppDetailsRepositoryImpl
+    ): AppDetailsRepository
 }

@@ -31,6 +31,7 @@ fun AppNavHost() {
 
         composable<DetailDestination> {
             AppDetailScreen(
+                onBackClick = {navController.popBackStack()},
                 onShowcaseAppClick = { showcaseApp ->
                     navController.navigate(DetailDestination(showcaseApp.id)) {
                         popUpTo<ListDestination> {inclusive = false}

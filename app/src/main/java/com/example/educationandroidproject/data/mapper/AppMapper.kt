@@ -2,6 +2,7 @@ package com.example.educationandroidproject.data.mapper
 
 import com.example.educationandroidproject.data.AppItem
 import com.example.educationandroidproject.data.dto.AppDto
+import com.example.educationandroidproject.data.local.AppDetailsEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,5 +22,27 @@ class AppMapper @Inject constructor() {
         return dtos.map {
             mapToDomain(it)
         }
+    }
+
+    fun mapEntityToDomain(entity: AppDetailsEntity): AppItem {
+        return AppItem(
+            id = entity.id,
+            iconUrl = entity.iconUrl,
+            nameApp = entity.nameApp,
+            description = entity.description,
+            category = entity.category,
+            isInWishlist = entity.isInWishlist
+        )
+    }
+
+    fun mapDomainToEntity(domain: AppItem): AppDetailsEntity {
+        return AppDetailsEntity(
+            id = domain.id,
+            iconUrl = domain.iconUrl,
+            nameApp = domain.nameApp,
+            description = domain.description,
+            category = domain.category,
+            isInWishlist = domain.isInWishlist
+        )
     }
 }

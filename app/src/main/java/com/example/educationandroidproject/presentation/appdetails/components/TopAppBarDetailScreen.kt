@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -17,12 +20,16 @@ import com.example.educationandroidproject.R
 import com.example.educationandroidproject.presentation.theme.EducationAndroidProjectTheme
 
 @Composable
-fun TopAppBarDetailScreen() {
+fun TopAppBarDetailScreen(
+    isInWishlist: Boolean,
+    onWishlistClic: () -> Unit,
+    onBackClick: () -> Unit
+) {
     Row(modifier = Modifier
         .background(MaterialTheme.colorScheme.background)
         .windowInsetsPadding(WindowInsets.statusBars)) {
         IconButton(
-            onClick = {}
+            onClick = onBackClick
         ) {
             Icon(
                 painter = painterResource(R.drawable.arrow_back_24dp_1f1f1f_fill0_wght400_grad0_opsz24),
@@ -32,15 +39,24 @@ fun TopAppBarDetailScreen() {
             )
         }
         Spacer(modifier = Modifier.weight(1f))
-        IconButton(
-            onClick = {}
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.share_24dp_1f1f1f_fill0_wght400_grad0_opsz24),
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.weight(1f)
-            )
+        Row() {
+            IconButton(onClick = onWishlistClic) {
+                Icon(
+                    imageVector = if (isInWishlist) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                    contentDescription = "Wishlist",
+                    tint = if (isInWishlist) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                )
+            }
+            IconButton(
+                onClick = {}
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.share_24dp_1f1f1f_fill0_wght400_grad0_opsz24),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.weight(1f)
+                )
+            }
         }
     }
 }
@@ -49,6 +65,6 @@ fun TopAppBarDetailScreen() {
 @Composable
 fun PreviewAppBarState() {
     EducationAndroidProjectTheme() {
-        TopAppBarDetailScreen()
+        //TopAppBarDetailScreen()
     }
 }

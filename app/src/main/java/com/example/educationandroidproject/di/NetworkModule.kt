@@ -1,10 +1,15 @@
 package com.example.educationandroidproject.di
 
+import android.content.Context
+import androidx.room.Room
 import com.example.educationandroidproject.data.api.CatalogApi
+import com.example.educationandroidproject.data.local.AppDatabase
+import com.example.educationandroidproject.data.local.AppDetailsDao
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -54,4 +59,16 @@ object NetworkModule {
     fun provideCatalogApi(retrofit: Retrofit): CatalogApi {
         return retrofit.create(CatalogApi::class.java)
     }
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object DatabaseModule {
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java, "app_database").build()
+    }
+    @Provides
+    fun provideAppDetailsDao(db: AppDatabase): AppDetailsDao = db.appDetailsDao()
 }
